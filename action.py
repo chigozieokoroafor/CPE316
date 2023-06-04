@@ -47,7 +47,7 @@ class Bot:
                 if item ==  x:
                     pos[1] = row.index(x)
                     pos[0] = self.world.index(row)
-                    print(pos)
+                    
         return pos
 
     def FirstItemInCol(self, col) :
@@ -75,32 +75,52 @@ class Bot:
             sPos = x_pos
 
         first_clear = self.clear(first)
-
+        first_count = 0
+        fcolumn = fPos[1]
         while first_clear == False:
             # row = x_pos[0]
-            column = fPos[1]
-            previousboxpos = self.FirstItemInCol(column)
+            
+            previousboxpos = self.FirstItemInCol(fcolumn)
             previousBox = self.world[previousboxpos[0]][previousboxpos[1]]
             # previousbox = self.world[row - 1][column]
             self.mov(previousBox)
             self.grab()
             self.placeOnTable()
             first_clear = self.clear(first)
+            first_count += 1
         
         second_clear = self.clear(second)
         # print(self.getWorld())
-        print(first, second)
-        print(fPos, sPos)
+        # print(first, second)
+        # print(fPos, sPos)
+        
+        scolumn = sPos[1]
+        second_count = 0
         while second_clear == False:
             # row = x_pos[0]
-            column = sPos[1]
-            previousboxpos = self.FirstItemInCol(column)
+            
+            previousboxpos = self.FirstItemInCol(scolumn)
             previousBox = self.world[previousboxpos[0]][previousboxpos[1]]
             # previousbox = self.world[row - 1][column]
             self.mov(previousBox)
             self.grab()
             self.placeOnTable()
             second_clear = self.clear(second)
+            second_count += 1
+        # this moves second to table if it isn't on table
+
+        if self.onTable(second) == False:
+            self.mov(second)
+            self.grab()
+            self.placeOnTable()
+
+        
+        # replace first with second
+        # get first item in column
+        # put second on box
+        # self.world[previousboxpos[0]][previousboxpos[1]]
+        
+        # after here restack in same order, but swapping the items into different positions
         
 
 
@@ -133,6 +153,12 @@ class Bot:
     def stack(self, x, y): # this part places box labelled x on stack
         self.mov(x)
         self.grab()
+
+    def onTable(self, x): # this part check if x is on table
+        pos = self.getSinglePosition(x)
+        if pos[0] == self.surface[0]:
+            return True
+        else:return False
 
             
     def placeOnTable(self):
