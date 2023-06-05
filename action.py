@@ -76,6 +76,7 @@ class Bot:
             sPos = x_pos
 
         first_clear = self.clear(first)
+        count = 0 
         # first_count = 0
         fcolumn = fPos[1]
         while first_clear == False:
@@ -90,8 +91,8 @@ class Bot:
             unstacked_box_positions.insert(0,box_pos)
             first_clear = self.clear(first)
             print(self.getWorld())
-            print("=============")
-            # first_count += 1
+            print(f"=====first====={count}===")
+            count += 1
         
         second_clear = self.clear(second)
         # print(self.getWorld())
@@ -112,7 +113,8 @@ class Bot:
             unstacked_box_positions.insert(0,box_pos)
             second_clear = self.clear(second)
             print(self.getWorld())
-            print("=============")
+            print(f"=====second====={count}===")
+            count += 1
             # second_count += 1
         # this moves second to table if it isn't on table
 
@@ -128,7 +130,7 @@ class Bot:
         fPos_onTable = self.getSinglePosition(first)
         sPos_onTable = self.getSinglePosition(second)
         self.stack(first, first_item_in_column)
-        
+
         # then move second to th first's positio on table
         self.world[fPos_onTable[0]][fPos_onTable[1]] = second
         self.world[sPos_onTable[0]][sPos_onTable[1]] = 0
@@ -145,7 +147,8 @@ class Bot:
             if box != 0:
                 self.stack(box, first_item_in_column)
             print(self.getWorld())
-            print("=============")
+            print(f"====stack======{count}===")
+            count += 1
             unstacked_box_positions.pop(0)
 
 

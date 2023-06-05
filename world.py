@@ -2,7 +2,7 @@ from action import Bot
 world = [
     [0, 0, 0, 0 , 0, 0, 0, 0],
     [0, 0, 0, 0 , 0, 0, 0, 0],
-    [0, 6, 0, 0 , 0, 0, 0, 0],
+    # [0, 6, 0, 0 , 0, 0, 0, 0],
     [0, 1, 0, 0 , 0, 0, 0, 0],
     [0, 3, 0, 0, 0 , 0, 0, 0],
     [0, 4, 0, 0 ,0 , 0, 0, 0],
@@ -29,7 +29,7 @@ print("=================================")
 # (bot.getSinglePosition(2))
 # bot.placeOnTable()
 # print(bot.clear(9))
-bot.swap(6, 7)
+bot.swap(3, 2)
 # print(bot.FirstItemInCol(3))
 # print(bot.onTable(2))
 # print(bot.getWorld())
