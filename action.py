@@ -172,17 +172,100 @@ class Bot:
 
 
 
-    # def boxOnAnotherCheck(self, x, y):
-    #     pass
+    def placeBoxOnTopanother(self, x, y): # puts y on x
+        x_pos = self.getSinglePosition(x)
+        firstItemPos = self.FirstItemInCol(x_pos[1])
+        firstItem = self.world[firstItemPos[0]][firstItemPos[1]]
+        itemOnTable = self.onTable(firstItem)
+        while itemOnTable ==False:
+            self.mov(firstItem)
+            self.grab()
+            self.placeOnTable()
+            firstItemPos = self.FirstItemInCol(x_pos[1])
+            firstItem = self.world[firstItemPos[0]][firstItemPos[1]]
+            itemOnTable = self.onTable(firstItem)
+        self.mov(y)
+        self.grab()
+        self.placeOnBox(x)
 
-    # def boxUnderAnother(self, x, y):
-    #     pass
 
-    # def sortAscending(self, x:list):
-    #     pass
+        
+        # y_pos = self.getSinglePosition(y)
+        # unstacked_box_positions = [] # stores positions of items in previous positions while unstcking
+        # # check which is on top first
+        # first = x
+        # fPos = x_pos
+        # second = y 
+        # # sPos = y_pos
+        # # if x_pos[0]> y_pos[0]:
+        # #     first = y
+        # #     fPos = y_pos
+        # #     second = x 
+        # #     sPos = x_pos
+        # fcolumn = fPos[1]
+        # clear = self.clear(first)
+        # while clear == False:
+        #     previousboxpos = self.FirstItemInCol(fcolumn)
+        #     previousBox = self.world[previousboxpos[0]][previousboxpos[1]]
+        #     # previousbox = self.world[row - 1][column]
+        #     self.mov(previousBox)
+        #     self.grab()
+        #     box_pos = self.placeOnTable()
+        #     unstacked_box_positions.insert(0,box_pos)
+        #     clear = self.clear(first)
+        # self.mov(second)
+        # self.grab()
+        # self.placeOnBox(first)
 
-    # def sortDescending(self, x:list):
-    #     pass
+    def boxUnderAnother(self, x, y): # puts y under x
+        x_pos = self.getSinglePosition(x)
+        firstItemPos = self.FirstItemInCol(x_pos[1])
+        firstItem = self.world[firstItemPos[0]][firstItemPos[1]]
+        itemOnTable = self.onTable(firstItem)
+        while itemOnTable ==False:
+            self.mov(firstItem)
+            self.grab()
+            self.placeOnTable()
+            firstItemPos = self.FirstItemInCol(x_pos[1])
+            firstItem = self.world[firstItemPos[0]][firstItemPos[1]]
+            itemOnTable = self.onTable(firstItem)
+        self.mov(x)
+        self.grab()
+        self.placeOnBox(y)
+
+    def sortStack(self, x:list, order:str = "ascending"):
+        # 
+        onTable = self.onTable(x[0])
+        count = 0
+        while onTable == False:
+            item = x[count]
+            self.mov(item)
+            self.grab()
+            self.placeOnTable()
+            count += 1
+            try:
+                self.onTable(x[count])
+            except IndexError:
+                break
+        if order == "ascending":
+            sorted_list = sorted(x)
+        else:
+            sorted_list = sorted(x,reverse=True)
+            
+        count = 1
+        while count<len(sorted_list):
+            self.mov(sorted_list[count])
+            self.grab()
+            self.placeOnBox(sorted_list[count-1])
+            count += 1
+
+
+        
+
+
+
+    def sortDescending(self, x:list):
+        descending = x.sort(reverse=True)
 
     def clear(self, x): # this part checks if there is any box on top of x
         # self.mov(x)
@@ -202,14 +285,11 @@ class Bot:
         self.grab()
         self.placeOnBox(y)
         
-        
-
     def onTable(self, x): # this part check if x is on table
         pos = self.getSinglePosition(x)
         if pos[0] == self.surface[0]:
             return True
         else:return False
-
             
     def placeOnTable(self):
         column = self.pos[1] - 1
@@ -231,8 +311,7 @@ class Bot:
         self.world[row-1][column] = self.hold
         
         # return [row-1, column], first_item
-        
-        
+            
     def mov(self, x): # this moves to the position of box x
         pos = [-1,-1]
         for row in self.world:    

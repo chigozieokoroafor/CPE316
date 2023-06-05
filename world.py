@@ -29,9 +29,13 @@ print("=================================")
 # (bot.getSinglePosition(2))
 # bot.placeOnTable()
 # print(bot.clear(9))
-bot.swap(3, 2)
+# bot.swap(3, 2)
 # print(bot.FirstItemInCol(3))
 # print(bot.onTable(2))
-# print(bot.getWorld())
+# bot.placeBoxOnTopanother(2, 3)
+# bot.boxUnderAnother(2, 3)
+bot.sortStack([1,3,4,2,7], "descending")
+print(bot.getWorld())
+
 
     
