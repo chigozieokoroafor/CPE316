@@ -134,6 +134,12 @@ class Bot:
         print("=============p===")
         # # using a while loop to stack the boxes.
         while len(unstacked_box_positions) != 0:
+            # replace first with second
+            # get first item in column
+            # put second on box
+            # self.world[previousboxpos[0]][previousboxpos[1]]
+            
+            # after here restack in same order, but swapping the items into different positions
             first_item_in_column_pos = self.FirstItemInCol(fPos[1])
             first_item_in_column = self.world[first_item_in_column_pos[0]][first_item_in_column_pos[1]]
             box_position = unstacked_box_positions[0]
@@ -144,19 +150,8 @@ class Bot:
             print(f"====stack======{count}===")
             count += 1
             unstacked_box_positions.pop(0)
-
-
-        #     
-
-
+            
         
-
-        # replace first with second
-        # get first item in column
-        # put second on box
-        # self.world[previousboxpos[0]][previousboxpos[1]]
-        
-        # after here restack in same order, but swapping the items into different positions
         
     def placeBoxOnTopanother(self, x, y): # puts y on x
         x_pos = self.getSinglePosition(x)
