@@ -11,8 +11,6 @@ class Bot:
         self.pos = [-1, -1]
         self.prevPos = [-1, -1]
         
-        
-
     def getPosition(self,x, y):
         # get the positions from of x and y
         xpos = [-1,-1] 
@@ -42,9 +40,7 @@ class Bot:
     def getSinglePosition(self,x):
         pos = [-1,-1]
         for row in self.world:
-            # print("================================")    
             for item in row:
-                # print(item)
                 if item ==  x:
                     pos[1] = row.index(x)
                     pos[0] = self.world.index(row)
@@ -60,7 +56,7 @@ class Bot:
                 return pos
 
     def swap(self, x, y):
-        # positions = self.getPosition(x, y)    
+        
         x_pos = self.getSinglePosition(x)
         y_pos = self.getSinglePosition(y)
         unstacked_box_positions = [] # stores positions of items in previous positions while unstcking
@@ -77,14 +73,14 @@ class Bot:
 
         first_clear = self.clear(first)
         count = 0 
-        # first_count = 0
+        
         fcolumn = fPos[1]
         while first_clear == False:
-            # row = x_pos[0]
+        
             
             previousboxpos = self.FirstItemInCol(fcolumn)
             previousBox = self.world[previousboxpos[0]][previousboxpos[1]]
-            # previousbox = self.world[row - 1][column]
+            
             self.mov(previousBox)
             self.grab()
             box_pos = self.placeOnTable()
@@ -95,18 +91,16 @@ class Bot:
             count += 1
         
         second_clear = self.clear(second)
-        # print(self.getWorld())
-        # print(first, second)
-        # print(fPos, sPos)
+        
         
         scolumn = sPos[1]
-        # second_count = 0
+        
         while second_clear == False:
-            # row = x_pos[0]
+            
             
             previousboxpos = self.FirstItemInCol(scolumn)
             previousBox = self.world[previousboxpos[0]][previousboxpos[1]]
-            # previousbox = self.world[row - 1][column]
+            
             self.mov(previousBox)
             self.grab()
             box_pos = self.placeOnTable()
@@ -115,7 +109,7 @@ class Bot:
             print(self.getWorld())
             print(f"=====second====={count}===")
             count += 1
-            # second_count += 1
+            
         # this moves second to table if it isn't on table
 
         if self.onTable(second) == False:
@@ -152,12 +146,7 @@ class Bot:
             unstacked_box_positions.pop(0)
 
 
-        #     current_box_pos = unstacked_box_positions[0]
-        #     current_box = self.world[current_box_pos[0]][current_box_pos[1]]
-        #     top_item = self.stack(current_box, top_item)
-        #     unstacked_box_positions.pop(0)
-        # print(self.getWorld())
-        # print("=============")
+        #     
 
 
         
@@ -169,9 +158,6 @@ class Bot:
         
         # after here restack in same order, but swapping the items into different positions
         
-
-
-
     def placeBoxOnTopanother(self, x, y): # puts y on x
         x_pos = self.getSinglePosition(x)
         firstItemPos = self.FirstItemInCol(x_pos[1])
@@ -251,21 +237,13 @@ class Bot:
             sorted_list = sorted(x)
         else:
             sorted_list = sorted(x,reverse=True)
-            
+
         count = 1
         while count<len(sorted_list):
             self.mov(sorted_list[count])
             self.grab()
             self.placeOnBox(sorted_list[count-1])
             count += 1
-
-
-        
-
-
-
-    def sortDescending(self, x:list):
-        descending = x.sort(reverse=True)
 
     def clear(self, x): # this part checks if there is any box on top of x
         # self.mov(x)
